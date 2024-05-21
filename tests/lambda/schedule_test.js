@@ -33,4 +33,7 @@ mocha.describe("Student Group test", async () => {
     await sp.goToGroupTimeTable();
   });
 
+  it("checks if current day is highlighted", async () => {
+    assert.equal(await sp.checkIfCurrentDayColored(), true);
+  });
 });

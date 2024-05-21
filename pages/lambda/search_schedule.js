@@ -38,6 +38,27 @@ class StudentGroupPage extends BasePage {
   async goToGroupTimeTable() {
     await this.click(By.xpath('//div[@id="221-321"]'));
   }
+
+  async checkIfCurrentDayColored() {
+    let days = await driver.findElements(
+      By.xpath(`//div[@class="schedule-week"]/child::div`)
+    );
+    console.log(days);
+    console.log(days.length);
+    console.log(new Date().getDay());
+    let thisDay;
+    for (let i = 0; i < days.length; i++) {
+      if (days.indexOf(days[i]) == new Date().getDay() - 1) {
+        thisDay = days[i];
+      }
+    }
+    console.log(thisDay);
+    console.log(await thisDay.getAttribute("class"));
+
+    return (
+      (await thisDay.getAttribute("class")) === "schedule-day schedule-day_today"
+    );
+  }
 }
 
 module.exports = StudentGroupPage;
