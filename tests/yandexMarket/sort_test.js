@@ -3,6 +3,7 @@ const mocha = require("mocha");
 const { By } = require("selenium-webdriver");
 const { assert } = require("chai");
 const { allure } = require("allure-mocha/dist/MochaAllureReporter");
+const getNowDateAndTime = require('../../currentDateTime')
 
 mocha.describe("Yandex Market Add to bag test", function () {
   const ybp = new marketPage();
@@ -36,4 +37,12 @@ mocha.describe("Yandex Market Add to bag test", function () {
       await ybp.checkCheapProducts()
     });
   });
+
+  afterEach(async function() {
+    if (this.currentTest.state == 'failed') {
+        let dateTime = getNowDateAndTime()
+        let imageFileName = `${this.currentTest.title}_${dateTime}.jpg`
+        await page.saveScreenshot(imageFileName)
+    }
+})
 });
